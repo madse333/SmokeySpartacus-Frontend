@@ -142,7 +142,7 @@ export class SmokeyChatComponent implements OnInit {
 
       const res = await this.http
         .post<{ reply: string }>(
-          'http://localhost:7071/api/AskSmokey',
+          'smokeyspartacusfunctions-hxa2gucabea8agcr.northeurope-01.azurewebsites.net/api/AskSmokey',
           { question },
           { headers: { Authorization: `Bearer ${idToken}` } }
         )
