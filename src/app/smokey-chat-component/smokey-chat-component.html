@@ -1,0 +1,61 @@
+<div class="topper-wrap">
+  <img class="topper" src="/SmokeyTopper.png" alt="Smokey Spartacus Topper" />
+</div>
+
+<div class="chat-container">
+<h1 class="title">Smokey Spartacus AI</h1>
+<p class="tokens"> Tokens: {{ user?.tokens ?? 0 }}</p>
+  <div class="chat-window" #chatWindow>
+    <div 
+      class="message-row" 
+      *ngFor="let msg of messages" 
+      [ngClass]="msg.role"
+    >
+      <img 
+        *ngIf="msg.role === 'smokey'" 
+        class="avatar"
+        src="/SmokeyAnsigt.png"
+        alt="Smokey"
+      />
+      <div class="bubble">
+        {{ msg.text }}
+      </div>
+      <img 
+        *ngIf="msg.role === 'user'" 
+        class="avatar"
+        src="/SmokeyUser.png"
+        alt="You"
+      />
+    </div>
+  </div>
+
+  <form (submit)="send(); $event.preventDefault()" class="input-form">
+    <input 
+      [(ngModel)]="input" 
+      name="chatInput" 
+      placeholder="Spørg Smokey Spartacus..."
+    />
+
+    <button type="submit" class="send-btn">
+      Send
+    </button>
+  </form>
+</div>
+
+<div class="falling-stuff">
+  <img
+    *ngFor="let item of fallingItems"
+    class="falling-img"
+    [src]="item.img"
+    alt=""
+    [style.left]="item.left"
+    [style.width]="item.width"
+    [style.height]="item.height"
+    [style.animation-duration]="item.duration"
+    [style.animation-delay]="item.delay"
+    [style.--rot-start]="item.rotateStart + 'deg'"
+    [style.--rot-end]="item.rotateEnd + 'deg'"
+  />
+</div>
+
+

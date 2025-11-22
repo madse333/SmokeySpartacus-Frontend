@@ -1,0 +1,46 @@
+<!-- Expandable top-left menu -->
+<div class="menu-container" [class.open]="menuOpen">
+  <button class="menu-toggle" (click)="menuOpen = !menuOpen">
+    ☰
+  </button>
+
+  <div class="menu-content">
+
+    <!-- When NOT logged in -->
+    <ng-container *ngIf="!currentUser(); else loggedInTemplate">
+
+      <div class="menu-buttons">
+        <button (click)="showLogin = true; showRegister = false">Login</button>
+        <button (click)="showRegister = true; showLogin = false">Register</button>
+      </div>
+
+      <ng-container *ngIf="showLogin">
+        <div class="form-container">
+          <app-login (loggedIn)="onLoggedIn($event)"></app-login>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showRegister">
+        <div class="form-container">
+          <app-register (registered)="onRegistered($event)"></app-register>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+    <!-- When logged in -->
+    <ng-template #loggedInTemplate>
+      <div class="user-info">
+        <img src="/SmokeyUser.png" class="user-avatar" alt="User" />
+        <div class="user-email">{{ currentUser()?.email }}</div>
+
+        <button class="logout-btn" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+
+<app-smokey-chat-component [user]="currentUser()"></app-smokey-chat-component>
