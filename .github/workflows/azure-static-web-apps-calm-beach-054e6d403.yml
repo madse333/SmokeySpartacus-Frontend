@@ -17,24 +17,23 @@ jobs:
       - uses: actions/checkout@v3
 
       # Install dependencies with legacy-peer-deps
+      # Remove unnecessary comments and clarify directories
       - name: Install npm dependencies
-        working-directory: ./  # Replace with your Angular app folder if not root
+        working-directory: ./        # Angular root
         run: npm install --legacy-peer-deps
-
-      # Build Angular app
+      
       - name: Build Angular App
-        working-directory: ./  # Replace with your Angular app folder if not root
+        working-directory: ./        # Angular root
         run: npm run build -- --output-path=dist/smokiespartacusai
-
-      # Deploy pre-built app to Azure Static Web Apps
-      - name: Build And Deploy
-        id: builddeploy
+      
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_BEACH_054E6D403 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/" # You can leave as "/" because we pre-built
-          api_location: ""  # Leave empty if no API
-          output_location: "dist/smokiespartacusai"
-          skip_app_build: true   # <-- Important: skip Oryx build to avoid npm conflict
+          app_location: "dist/smokiespartacusai"  # <- pre-built folder
+          api_location: ""                         # no API
+          skip_app_build: true                     # skip Oryx build
+      
+
