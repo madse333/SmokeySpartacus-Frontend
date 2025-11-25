@@ -114,7 +114,6 @@ export class SmokeyChatComponent implements OnInit {
     const question = this.input.trim();
     if (!question) return;
 
-    // Deduct 1 token in Firestore
     const userRef = doc(this.firestore, 'users', this.user.id);
     this.user.tokens -= 1;
     await updateDoc(userRef, { tokens: this.user.tokens });
@@ -140,13 +139,11 @@ export class SmokeyChatComponent implements OnInit {
 
       const idToken = await getIdToken(this.auth.currentUser, true);
 
-      const res = await this.http
-        .post<{ reply: string }>(
+      const res = await this.http.post<{ reply: string }>(
           'https://smokeyspartacusfunctions-hxa2gucabea8agcr.westeurope-01.azurewebsites.net/api/AskSmokey',
           { question },
           { headers: { Authorization: `Bearer ${idToken}` } }
-        )
-        .toPromise();
+        ).toPromise();
 
       clearInterval(interval);
       thinkingMsg.text = res?.reply ?? 'Smokey svarede ikke!';
